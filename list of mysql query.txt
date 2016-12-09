@@ -1,0 +1,163 @@
+SELECT color.*, product.* FROM color,product WHERE color.prodID = product.prodID AND color.colorID = 'color-0001'
+
+SELECT color.*, product.*, subcategorytbl.*, categorytbl.* FROM color,product,subcategorytbl, categorytbl WHERE color.prodID = product.prodID AND color.prodID = product.prodID AND product.subcategoryID=subcategorytbl.subcategoryID AND categorytbl.categoryID = subcategorytbl.categoryID
+AND product.prodID = 'prod-0001' AND color.colorID ='color-0001'
+
+SELECT product.*, subcategorytbl.*, categorytbl.* FROM product,subcategorytbl, categorytbl WHERE product.subcategoryID=subcategorytbl.subcategoryID AND categorytbl.categoryID = subcategorytbl.categoryID
+AND categorytbl.categoryID='category-02'
+
+SELECT color.*, product.*, subcategorytbl.*, categorytbl.* FROM color,product,subcategorytbl, categorytbl WHERE color.prodID = product.prodID AND color.prodID = product.prodID AND product.subcategoryID=subcategorytbl.subcategoryID AND categorytbl.categoryID = subcategorytbl.categoryID
+AND categorytbl.categoryID='category-01' GROUP BY product.prodID
+
+SELECT color.*, product.*, subcategorytbl.*, categorytbl.* FROM color,product,subcategorytbl, categorytbl WHERE color.prodID = product.prodID AND color.prodID = product.prodID AND product.subcategoryID=subcategorytbl.subcategoryID AND categorytbl.categoryID = subcategorytbl.categoryID
+AND product.activate='Yes' AND categorytbl.categoryID='category-03'  GROUP BY product.prodID
+
+SELECT color.*, product.*, subcategorytbl.*, categorytbl.* FROM color,product,subcategorytbl, categorytbl WHERE color.prodID = product.prodID AND color.prodID = product.prodID AND product.subcategoryID=subcategorytbl.subcategoryID AND categorytbl.categoryID = subcategorytbl.categoryID
+AND product.activate='Yes' GROUP BY product.prodID
+
+//for main topsales query
+
+SELECT color.*, product.*, topsales.* FROM color,product,topsales WHERE color.prodID = product.prodID AND color.prodID = product.prodID AND topsales.prodID=product.prodID AND product.activate='Yes' AND topsales.level=1 GROUP BY product.prodID
+
+/*<a href='" . base_url() . "view/product?id=" . $id . "&colorID=" . $colorID . "'><img width='250px' height='400px' src='". base_url() . "images/product/".$prodID."/main.png'>";*/
+
+
+//available products
+
+
+SELECT COUNT(renttbl.rentID) FROM ordertbl, renttbl WHERE ordertbl.orderID = renttbl.orderID AND renttbl.rent_status="rent" AND ordertbl.colorID="color-0001"
+
+//View colors of the product,available_quantity and and intial_quantity
+SELECT color.colorID, color.quantity, (SELECT COUNT(renttbl.rentID) FROM ordertbl, renttbl WHERE ordertbl.orderID = renttbl.orderID AND renttbl.rent_status="rent" AND ordertbl.colorID=color.colorID)as out_product, list_of_color.list_colorname FROM color, list_of_color WHERE color.list_colorID=list_of_color.list_colorID AND color.prodID="prod-0001"
+
+//
+SELECT list_of_color.list_colorID, list_of_color.list_colorname FROM list_of_color WHERE list_of_color.list_colorID NOT IN (SELECT list_of_color.list_colorID FROM list_of_color, product, color WHERE product.prodID=color.prodID AND color.list_colorID=list_of_color.list_colorID AND color.prodID='prod-0003')
+
+
+$start_date='2016-01-01';
+$end_date='2016-01-31';
+
+$this->db->where('date BETWEEN "'. date('Y-m-d', strtotime($start_date)). '" and "'. date('Y-m-d', strtotime($end_date)).'"');
+
+SELECT DATE_FORMAT(column_name, '%d/%m/%Y') FROM tablename
+
+//rent list
+
+SELECT renttbl.*, transactiontbl.transaction_delivery_date, color.colorID, list_of_color.list_colorname, product.prodID FROM renttbl, transactiontbl, ordertbl, color, list_of_color, product WHERE renttbl.orderID=ordertbl.orderID AND ordertbl.transactionID=transactiontbl.transactionID AND ordertbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID
+
+//delivery list by transaction
+
+SELECT renttbl.*, transactiontbl.transactionID, transactiontbl.transaction_delivery_date, color.colorID, list_of_color.list_colorname, product.prodID FROM renttbl, transactiontbl, ordertbl, color, list_of_color, product WHERE renttbl.orderID=ordertbl.orderID AND ordertbl.transactionID=transactiontbl.transactionID AND ordertbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID AND renttbl.rent_package="OK" GROUP BY transactiontbl.transaction_delivery_date
+
+
+SELECT transactiontbl.transactionID, transactiontbl.transaction_delivery_date, usertbl.fname, usertbl.lname, product.prodID FROM renttbl, transactiontbl, ordertbl, color, list_of_color, product, usertbl WHERE renttbl.orderID=ordertbl.orderID AND ordertbl.transactionID=transactiontbl.transactionID AND ordertbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID AND transactiontbl.userID=usertbl.userid AND renttbl.rent_package="OK" GROUP BY transactiontbl.transactionID
+
+//delivery with date condition
+SELECT DATE_ADD(DATE(now()), INTERVAL 3 DAY)as wew,transactiontbl.transactionID, transactiontbl.transaction_delivery_date, usertbl.fname, usertbl.lname, product.prodID FROM renttbl, transactiontbl, ordertbl, color, list_of_color, product, usertbl WHERE renttbl.orderID=ordertbl.orderID AND ordertbl.transactionID=transactiontbl.transactionID AND ordertbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID AND transactiontbl.userID=usertbl.userid AND transactiontbl.transaction_delivery_date <= DATE_ADD(DATE(now()), INTERVAL 3 DAY) AND DATE(now()) <= transactiontbl.transaction_delivery_date AND renttbl.rent_package="OK" GROUP BY transactiontbl.transactionID ORDER by transactiontbl.transaction_delivery_date ASC
+
+//delivery order view
+SELECT product.name, ordertbl.* FROM ordertbl, transactiontbl, product, color, renttbl WHERE ordertbl.transactionID=transactiontbl.transactionID AND ordertbl.colorID=color.colorID AND color.prodID=product.prodID AND ordertbl.transactionID=transactiontbl.transactionID AND renttbl.orderID=ordertbl.orderID AND transactiontbl.transactionID="transaction-00001" GROUP BY ordertbl.orderID
+
+SELECT transactiontbl.transaction_delivery_date, transactiontbl.transaction_total_price, transactiontbl.transactionID, usertbl.fname, usertbl.lname, usertbl.address , usertbl.city, usertbl.zip_code FROM transactiontbl,  usertbl WHERE transactiontbl.userID=usertbl.userid AND transactiontbl.transactionID="transaction-00001"
+
+
+//reserve
+SELECT transactiontbl.transactionID, CONCAT(usertbl.fname , ' ' ,  usertbl.lname)as Name, transactiontbl.transaction_delivery_date FROM transactiontbl, usertbl, ordertbl, reservetbl WHERE reservetbl.orderID=ordertbl.orderID AND ordertbl.transactionID=transactiontbl.transactionID AND transactiontbl.transaction_type="reserve" AND transactiontbl.transaction_delivery_date >=DATE_ADD(DATE(now()), INTERVAL 3 DAY) GROUP BY transactiontbl.transactionID ORDER BY transactiontbl.transaction_delivery_date ASC
+
+//order list for customer
+SELECT reservetbl.reserveID, color.colorID, product.name, product.price, list_of_color.list_colorname FROM transactiontbl, usertbl, ordertbl, reservetbl,color,product, list_of_color WHERE reservetbl.orderID=ordertbl.orderID AND ordertbl.transactionID=transactiontbl.transactionID AND transactiontbl.userID=usertbl.userid AND ordertbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID AND transactiontbl.transaction_type="reserve" AND transactiontbl.transaction_delivery_date >=DATE_ADD(DATE(now()), INTERVAL 3 DAY) AND transactiontbl.transactionID="transaction-00004"
+
+//reserve with having
+SELECT transactiontbl.transactionID, CONCAT(usertbl.fname , " " , usertbl.lname)as Name, transactiontbl.transaction_delivery_date FROM transactiontbl, usertbl, ordertbl, reservetbl WHERE reservetbl.orderID=ordertbl.orderID AND ordertbl.transactionID=transactiontbl.transactionID AND transactiontbl.userID=usertbl.userid AND transactiontbl.transaction_type="reserve" AND transactiontbl.transaction_delivery_date >=DATE_ADD(DATE(now()), INTERVAL 3 DAY) AND usertbl.userid="RSFC-2016-00015" GROUP BY transactiontbl.transactionID HAVING COUNT(case when reservetbl.reserve_status="reserve" then 1 else null end) > 0 ORDER BY transactiontbl.transaction_delivery_date ASC 
+
+//filter
+
+SELECT color.*, product.price, list_of_color.list_colorname, subcategorytbl.subcategory FROM product INNER JOIN subcategorytbl ON product.subcategoryID=subcategorytbl.subcategoryID INNER JOIN color ON product.prodID=color.prodID INNER JOIN list_of_color ON color.list_colorID=list_of_color.list_colorID
+
+SELECT color.*, product.price, list_of_color.list_colorname, subcategorytbl.subcategory FROM product INNER JOIN subcategorytbl ON product.subcategoryID=subcategorytbl.subcategoryID INNER JOIN color ON product.prodID=color.prodID INNER JOIN list_of_color ON color.list_colorID=list_of_color.list_colorID WHERE subcategorytbl.subcategoryID='subcategory-01' AND color.list_colorID='listcolorID-00001' AND product.price >=2000 AND product.price <=4000
+
+//quantity available
+SELECT ((SELECT quantity FROM color WHERE colorID="color-0001") - (SELECT COUNT(reservetbl.reserveID) FROM ordertbl, reservetbl WHERE ordertbl.orderID = reservetbl.orderID AND reservetbl.reserve_status="reserve" AND ordertbl.colorID="color-0001") -(SELECT COUNT(renttbl.rentID) FROM ordertbl, renttbl WHERE ordertbl.orderID = renttbl.orderID AND renttbl.rent_status="rent" AND ordertbl.colorID="color-0001")) as quantity
+
+href="' .base_url() .'view/cancel_order/'. $reserveID .'"
+
+//view cancel product
+SELECT product.name, ordertbl.order_price, canceltbl.penalty, canceltbl.remaining, canceltbl.cancel_date FROM transactiontbl, usertbl, ordertbl, reservetbl, canceltbl, product, color WHERE transactiontbl.transactionID=ordertbl.transactionID AND ordertbl.colorID=color.colorID AND color.prodID=product.prodID AND ordertbl.orderID=reservetbl.orderID AND reservetbl.reserveID=canceltbl.reserveID AND transactiontbl.userID=usertbl.userID AND usertbl.userID="RSFC-2016-00001" GROUP BY canceltbl.cancelID
+
+//rent and reserve new
+(renttbl.transactionID=transactiontbl.transactionID AND renttbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID AND transactiontbl.userID=usertbl.userid AND transactiontbl.transaction_package_status="") OR(reservetbl.transactionID=transactiontbl.transactionID AND reservetbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID AND transactiontbl.userID=usertbl.userID AND transactiontbl.transaction_package_status="" AND reservetbl.rent_status="rent") GROUP BY transactiontbl.transactionID ORDER BY transactiontbl.transaction_delivery_date ASC
+
+//view order for rent/reserve
+SELECT reservetbl.reserveID, reservetbl.product_price, transactiontbl.transactionID, product.prodID, product.name, list_of_color.list_colorname,  reservetbl.product_price, reservetbl.reserve_size, transactiontbl.transaction_total_price FROM transactiontbl, product, color, reservetbl, usertbl, list_of_color WHERE reservetbl.transactionID=transactiontbl.transactionID AND reservetbl.colorID=color.colorID AND color.prodID=product.prodID AND color.list_colorID=list_of_color.list_colorID AND transactiontbl.transactionID="transaction-00022" GROUP BY reservetbl.reserveID
+
+
+SELECT transactiontbl.transactionID, transactiontbl.transaction_delivery_date, usertbl.fname, usertbl.lname FROM renttbl, reservetbl, paymenttbl, transactiontbl, color, list_of_color, product, usertbl WHERE (renttbl.transactionID=transactiontbl.transactionID AND renttbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID AND transactiontbl.userID=usertbl.userID AND transactiontbl.transaction_package_status="" AND paymenttbl.transactionID=transactiontbl.transactionID AND paymenttbl.payment_type="rent" AND paymenttbl.payment_status="accept") OR (reservetbl.transactionID=transactiontbl.transactionID AND reservetbl.colorID=color.colorID AND color.list_colorID=list_of_color.list_colorID AND color.prodID=product.prodID AND transactiontbl.userID=usertbl.userID AND transactiontbl.transaction_package_status="" AND paymenttbl.transactionID=transactiontbl.transactionID AND paymenttbl.payment_type="rent" AND paymenttbl.payment_status="accept") GROUP BY transactiontbl.transactionID ORDER BY transactiontbl.transaction_delivery_date ASC
+
+
+/// reports
+
+/specific month query
+SELECT SUM(product_price), renttbl.*, MONTH(date_rented) as month FROM renttbl WHERE date_rented >= Subdate(Curdate(), INTERVAL 1 MONTH) GROUP BY MONTH(date_rented)
+
+//report cancel
+
+SELECT product.prodID, product.name, list_of_color.list_colorname, reservetbl.reserve_size, canceltbl.penalty_percent, canceltbl.penalty, canceltbl.remaining, canceltbl.cancel_date FROM transactiontbl, usertbl, reservetbl, canceltbl, product, color, list_of_color WHERE transactiontbl.transactionID=reservetbl.transactionID AND reservetbl.colorID=color.colorID AND color.prodID=product.prodID AND color.list_colorID=list_of_color.list_colorID AND reservetbl.reserveID=canceltbl.reserveID AND transactiontbl.userID=usertbl.userID GROUP BY canceltbl.cancelID
+
+
+//chart report
+SELECT DATE_FORMAT(date_rented,"%m-%Y") AS Month, SUM(product_price) FROM renttbl GROUP BY DATE_FORMAT(date_rented, "%m-%Y")
+SELECT DATE_FORMAT(date_rented,"%m-%Y") AS Month, SUM(product_price) FROM renttbl wHERE YEAR(date_rented) = 2016 GROUP BY DATE_FORMAT(date_rented, "%m-%Y")
+
+SELECT DATE_FORMAT(cancel_date,"%m-%Y") AS Month, SUM(penalty)cancel_status FROM canceltbl wHERE YEAR(cancel_date) = 2016 GROUP BY DATE_FORMAT(cancel_date, "%m-%Y")
+
+SELECT COALESCE((SELECT SUM(product_price) FROM renttbl WHERE MONTH(date_rented)=1 AND YEAR(date_rented)=2016),0) AS total_rent, (SELECT SUM(penalty) FROM canceltbl WHERE MONTH(cancel_date)=1 AND YEAR(cancel_date)=2016) AS total_cancel,(SELECT SUM(product_price) FROM renttbl WHERE MONTH(rent_date_returned)=1 AND YEAR(rent_date_returned)=2016 AND rent_status="damage" OR rent_status="LOST") as total_damage
+
+/*foreach($cancel as $object2){
+	$mon_2 = explode('-', $object2->Month_cancel);
+	$mon_explode2= $mon_2[0];
+
+	if($mon_explode == $mon_explode2){
+		echo '["'.$month. '",' . $object->sales .',' . $object2->cancel_sales. '],'; 
+	}
+}*/
+
+
+						<div class="table-responsive">
+						    <table id="table_member_view" class="table table-hover table table-striped">
+						        <thead>
+						            <tr>
+						            	<th>Date</th>
+						                <th>Type</th>
+						                <th>Amount</th>
+						                
+						                
+						            </tr>
+						        </thead>
+						        <tbody>
+						        <?php
+
+						        	$overall = 0;
+									foreach ($monthly->result() as $row) {
+									
+										$date = $row->Month;
+										$sales = $row->sales;
+										$overall = $overall + $sales;
+										echo'<tr>
+								                <td>' . $date . '</td>
+								                <td>Rent</td>
+								                <td>' . $sales .'</td>
+								                
+								            </tr>';
+									}
+								?>
+						        </tbody>
+						    </table>
+						    <a id="delivery_report" href="<?php echo base_url();?>reports/delivery_reports">View all delivery transaction</a>
+							<?php
+							
+								echo '<div id="page" class="col-xs-12">';
+								echo $this->pagination->create_links();
+								echo '</div><br />'
+							?>
+						</div>
+					</div>
