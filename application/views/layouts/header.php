@@ -142,12 +142,17 @@
 		</div>
 
 		<div id="announcement" class="col-md-3">
-			<div class="list-group">
+			<!-- <div class="list-group-item success">
 				<h4 class="list-group-item-heading" align="center">
 					Announcements
 				</h4>
-			</div>
+			</div> -->
 			<div class="list-group">
+				<div id="announcement-heading">
+					<a href="#" class="list-group-item info" >
+					Announcements
+				</a>
+				</div>
 				<a href="#" class="list-group-item">
 					The Quick Brown Fox Jump Over The Lazy Dog
 				</a>
