@@ -14,9 +14,7 @@
 		
 	</script>
 	<style type="text/css">
-		body{
-			background-color: #ECECEC;
-		}
+
 		#slide{
 			border: 1px solid black;
 			height: 500px;
@@ -75,48 +73,18 @@
 
 		#middle_content #content1{
 			margin-left: -10px;
-			height: auto;
-			border: 1px solid #ffffff;
-			box-shadow: 5px 5px 2px grey;
-			
+			height: 200px;
+			border: 1px solid #2ecc71;
 		}
 		#middle_content #content2{
-			height: auto;
-			border: 1px solid #ffffff;
-			box-shadow: 5px 5px 3px grey;
-			
+			height: 200px;
+			border: 1px solid #2ecc71;
 		}
 		#middle_content #content3{
-			height: auto;
-			border: 1px solid #ffffff;
-			box-shadow: 5px 5px 3px grey;
-			
+			height: 200px;
+			border: 1px solid #2ecc71;
 		}
 
-		#middle_content #modal{
-			background-color: #2ecc71;
-			opacity: 0.6;
-			z-index: 1;
-			text-decoration: none;
-			color: white;
-			border-radius: 3px;
-		}
-
-		#middle_content #announcement{
-			z-index: 1;
-			text-decoration: none;
-			color:white;
-			height:auto;
-			box-shadow: 10px 10px 5px grey;
-		}
-
-		#middle_content #announcement-header{
-			font-family: Imprint MT Shadow; 
-		}
-
-		#middle_content #view-more{
-			margin-left:65%;
-		}
 		#sayings{
 			width: 20%;
 			height: 60px;
@@ -140,15 +108,7 @@
 				<li><a href="">Home</a></li>
 				<li><a href="">About us</a></li>
 				<li><a href="">User Guide</a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						Registration <span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#farmers">Farmers</a></li>
-						<li><a href="#Investors">Investors</a></li>
-					</ul>
-				</li>
+				<li><a href="">Registration</a></li>
 			</ul>
 		</div>
 	</div>
@@ -162,116 +122,22 @@
 	
 	<div id="middle_content" class ="col-md-12">
 		<div id="" class="col-md-9">
-		 	<div id="content1" class="col-md-4">
-		 		<div class="thumbnail">
-			 		<img src="images/img.jpg" alt="...">
-			 		<div class="caption">
-			 			<h3>Thumbnail label</h3>
-			 			<p>....</p>
-			 			<div id="view-more">
-			 				<button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">
-			 				View More
-			 				</button>
-			 			</div>
-
-			 			<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-			 				<div class="modal-dialog modal-lg" role="document">
-			 					<div class="modal-content">
-			 						<div id="modal">
-			 							<div class="modal-header">
-				 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				 								<span aria-hidden="true">&times;</span>
-				 							</button>
-				 							<h3 class="modal-tittle" id="myModalLabel" align="center" style="font-family:Bodoni MT Black">
-				 								<p style="font-size:200%;">Farm Type</p>
-				 							</h3>
-				 						</div>
-			 						</div>
-			 						<div class="modal-body">
-			 							<img src="images/img.jpg" alt="...." style="width:100%; height:150px;">
-			 						</div>
-			 						<div class="modal-footer">
-			 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			 						</div>
-			 					</div>
-			 				</div>
-			 			</div>
-			 		</div>
-			 	</div>
+			<div id="content1" class = "col-md-4">
+		 		<label>
+		 			Different Type of Farm
+		 		</label>	
 		 	</div>
-		 	<div id="content2" class="col-md-4">
-		 		<div class="thumbnail">
-			 		<img src="images/img.jpg" alt="...">
-			 		<div class="caption">
-			 			<h3>Thumbnail label</h3>
-			 			<p>....</p>
-			 			<div id="view-more">
-			 				<button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">
-			 				View More
-			 				</button>
-			 			</div>
 
-			 			<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-			 				<div class="modal-dialog modal-lg" role="document">
-			 					<div class="modal-content">
-			 						<div id="modal">
-			 							<div class="modal-header">
-				 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				 								<span aria-hidden="true">&times;</span>
-				 							</button>
-				 							<h3 class="modal-tittle" id="myModalLabel" align="center" style="font-family:Imprint MT Black">
-				 								<p style="font-size:200%;">Farm Type</p>
-				 							</h3>
-				 						</div>
-			 						</div>
-			 						<div class="modal-body">
-			 							<img src="images/img.jpg" alt="...." style="width:100%; height:150px;">
-			 						</div>
-			 						<div class="modal-footer">
-			 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			 						</div>
-			 					</div>
-			 				</div>
-			 			</div>
-			 		</div>
-			 	</div>
+		 	<div id="content2" class = "col-md-4">
+		 		<label>
+		 			Different Type of Farm
+		 		</label>	
 		 	</div>
-		 	<div id="content3" class="col-md-4">
-		 		<div class="thumbnail">
-			 		<img src="images/img.jpg" alt="...">
-			 		<div class="caption">
-			 			<h3>Thumbnail label</h3>
-			 			<p>....</p>
-			 			<div id="view-more">
-			 				<button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">
-			 				View More
-			 				</button>
-			 			</div>
 
-			 			<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-			 				<div class="modal-dialog modal-lg" role="document">
-			 					<div class="modal-content">
-			 						<div id="modal">
-			 							<div class="modal-header">
-				 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				 								<span aria-hidden="true">&times;</span>
-				 							</button>
-				 							<h3 class="modal-tittle" id="myModalLabel" align="center" style="font-family:Bodoni MT Black">
-				 								<p style="font-size:200%;">Farm Type</p>
-				 							</h3>
-				 						</div>
-			 						</div>
-			 						<div class="modal-body">
-			 							<img src="images/img.jpg" alt="...." style="width:100%; height:150px;">
-			 						</div>
-			 						<div class="modal-footer">
-			 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			 						</div>
-			 					</div>
-			 				</div>
-			 			</div>
-			 		</div>
-			 	</div>
+		 	<div id="content3" class = "col-md-4">
+		 		<label>
+		 			Different Type of Farm
+		 		</label>	
 		 	</div>
 		</div>
 
@@ -282,10 +148,10 @@
 				</h4>
 			</div> -->
 			<div class="list-group">
-				<div id="announcement-header">
-					<a href="#" class="list-group-item active list-group-item-success" >
-						<h4 align="center" style="font-size:20px;">Announcements</h4>
-					</a>
+				<div id="announcement-heading">
+					<a href="#" class="list-group-item info" >
+					Announcements
+				</a>
 				</div>
 				<a href="#" class="list-group-item">
 					The Quick Brown Fox Jump Over The Lazy Dog
@@ -309,9 +175,3 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	$('#myModal').on('shown.bs.modal', function(){
-		$('#myInput').focus()
-	})
-</script>

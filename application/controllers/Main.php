@@ -12,17 +12,5 @@ class Main extends CI_Controller{
 
 	}
 
-	public function index1(){
-		$this->load->view('layouts/about');
-
-	}
-
-	public function login(){
-		$this->load->view('layouts/login');
-	}
-
-	public function registration_farmers(){
-		$this->load->view('layouts/registration_farmers');
-	}
 }
 ?>
